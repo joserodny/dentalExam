@@ -1,4 +1,3 @@
-// Header.js
 export const Header = () => (
     <header className="absolute top-0 left-0 w-full z-50 px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64">
         <div className="hidden md:flex justify-between items-center py-2 border-b text-sm ">

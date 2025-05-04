@@ -1,4 +1,3 @@
-// ServiceCard.js
 export const ServiceCard = ({ image, title, description }) => (
   <div className="md:w-1/2 md:px-4 mt-4 md:mt-8 lg:mt-0 lg:w-1/4">
     <div className="bg-white rounded-lg border border-gray-300 p-8">

@@ -4,7 +4,7 @@ import mysql from 'mysql2/promise';
 import cors from 'cors';
 
 
-import { registerPatients } from './controllers/patient.controller.js'
+import { registerPatients, loginPatients } from './controllers/patient.controller.js'
 dotenv.config();
 
 const app = express();
@@ -34,7 +34,7 @@ const pool = mysql.createPool({
 })();
 
 app.post('/api/register', registerPatients);
-
+app.post('/api/login', loginPatients);
 
 
 

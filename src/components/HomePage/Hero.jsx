@@ -1,4 +1,3 @@
-// HeroSection.js
 import coverBg from '../../assets/images/cover-bg.jpg';
 
 export const HeroSection = () => (

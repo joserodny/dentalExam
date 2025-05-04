@@ -1,4 +1,3 @@
-// ServicesSection.js
 import {ServiceCard} from './ServiceCard'
 import oralSurgery from '../../assets/images/oral-surgery.svg';
 import painlessSurgery from '../../assets/images/painless-dentistry.svg';

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export const RegisterPage = () => {
     const [name, setName] = useState('');
@@ -8,40 +9,36 @@ export const RegisterPage = () => {
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
 
+    const navigate = useNavigate(); // for navigation after successful login
+
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault();  // Prevent default form submission behavior
         setError('');
         setMessage('');
-    
+
         try {
-            // Register the user
-            await axios.post('/api/register', {
+            // Send registration request to the backend
+            const response = await axios.post('/api/register', {
                 name,
                 email,
                 password,
             });
-    
-            // Automatically log in the user
-            const loginResponse = await axios.post('/api/login', {
-                email,
-                password,
-            });
-    
-            // Store token or set auth context/state as needed
-            localStorage.setItem('token', loginResponse.data.token); // or use your preferred method
-            setMessage('Registration and login successful!');
-    
-            // Redirect if needed (e.g., to dashboard)
-            // navigate('/dashboard'); <-- if using react-router-dom
-    
+
+            // Save JWT token and user info to localStorage
+            localStorage.setItem('token', response.data.token);  // Save the token for future requests
+            localStorage.setItem('user', JSON.stringify(response.data.user));  // Save the user info
+
+            navigate('/dashboard');  // Redirect user to the dashboard
+
+            // Reset the form
             setName('');
             setEmail('');
             setPassword('');
         } catch (err) {
-            setError(err.response?.data?.message || 'Something went wrong');
+            // Handle errors and display error message
+            setError(err.response?.data || 'Something went wrong');
         }
     };
-    
 
     return (
         <div className="min-h-screen bg-gray-100 flex flex-col justify-center sm:py-12">
