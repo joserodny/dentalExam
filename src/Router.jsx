@@ -4,11 +4,12 @@ import { BookingPage } from './pages/BookingPage'; // Import BookingPage compone
 import { PatientDashBoardPage } from './pages/PatientDashBoardPage'; // Import PatientDashBoardPage component
 
 export const RoutesComponent = () => {
-  return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/Book" element={<BookingPage />} />
-      <Route path="/Dashboard" element={<PatientDashBoardPage />} />
-    </Routes>
-  );
+    return (
+        <Routes>
+        <Route path="/" element={<HomePage />} />
+        
+        <Route path="/Book" element={<BookingPage />} />
+        <Route path="/Dashboard" element={<PatientDashBoardPage />} />
+        </Routes>
+    );
 };
