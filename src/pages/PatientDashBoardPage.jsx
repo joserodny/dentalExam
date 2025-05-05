@@ -168,7 +168,14 @@ export const PatientDashBoardPage = () => {
           ) : appointments.length > 0 ? (
             appointments.map((appointment) => (
               <tr key={appointment.id}>
-                <td style={{ border: '1px solid #ddd', padding: '8px' }}>{appointment.date}</td>
+              <td style={{ border: '1px solid #ddd', padding: '8px' }}>
+                {new Date(appointment.date).toLocaleDateString('en-US', {
+                  weekday: 'long', // Optional: If you want the weekday
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </td>
                 <td style={{ border: '1px solid #ddd', padding: '8px' }}>{appointment.dentistName || 'N/A'}</td>
                 <td style={{ border: '1px solid #ddd', padding: '8px' }}>{appointment.status}</td>
               </tr>

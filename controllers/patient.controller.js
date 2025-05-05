@@ -28,7 +28,9 @@ export const getAppointments = async(req, res) => {
       SELECT appointments.*, dentists.name AS dentistName
       FROM appointments
       LEFT JOIN dentists ON appointments.dentistId = dentists.id
-      WHERE appointments.patientId = ?`; // Add a filter for the patient's ID
+      WHERE appointments.patientId = ?
+      ORDER BY appointments.date ASC;`;
+      
 
     try {
         const [rows] = await dbConfig.query(sql, [req.user.id]);
