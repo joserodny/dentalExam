@@ -32,9 +32,26 @@ export const Header = () => (
         <div className="w-full md:w-auto" id="menu">
             <nav>
                 <ul className="md:flex items-center">
-                <li className="ml-4 lg:block"><a className="py-2 inline-block text-white px-2 font-semibold"
-                    href="/Login">Login</a></li>
-                <li className="ml-4"><a className="py-2 inline-block text-white px-2 font-semibold" href="/Register">Register</a></li>
+                {localStorage.getItem('token') ? (
+                    <li className="ml-4">
+                        <a className="py-2 inline-block text-white px-2 font-semibold" href="/Dashboard">
+                        Home
+                        </a>
+                    </li>
+                    ) : (
+                    <>
+                        <li className="ml-4 lg:block">
+                        <a className="py-2 inline-block text-white px-2 font-semibold" href="/Login">
+                            Login
+                        </a>
+                        </li>
+                        <li className="ml-4">
+                        <a className="py-2 inline-block text-white px-2 font-semibold" href="/Register">
+                            Register
+                        </a>
+                        </li>
+                    </>
+                    )}
                 </ul>
             </nav>
         </div>

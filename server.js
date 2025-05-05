@@ -4,8 +4,8 @@ import mysql from 'mysql2/promise';
 import cors from 'cors';
 
 
-import { registerPatients, loginPatients } from './controllers/auth.controller.js'
-
+import { registerPatients, loginPatients, logout } from './controllers/auth.controller.js'
+import { updatePatient } from './controllers/patient.controller.js';
 
 dotenv.config();
 
@@ -38,7 +38,10 @@ const pool = mysql.createPool({
 //api routes
 app.post('/api/register', registerPatients);
 app.post('/api/login', loginPatients);
+app.post('/api/logout', logout);
 
+// Patient routes
+app.put('/api/patients/:id', updatePatient);
 
 
 app.listen(PORT, () => {

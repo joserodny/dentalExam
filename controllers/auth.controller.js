@@ -83,3 +83,9 @@ export const loginPatients = async(req, res) => {
         return res.status(500).json({ message: 'Internal Server Error', error: err.message });
     }
 };
+
+//logout
+export const logout = (req, res) => {
+    // Stateless logout (JWT): just acknowledge
+    res.status(200).json({ message: 'Logout acknowledged. Clear token on client.' });
+  };
