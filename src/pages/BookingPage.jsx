@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export const BookingPage = () => {
   const [dentists, setDentists] = useState([]);
   const [selectedDentist, setSelectedDentist] = useState('');
   const [availableDates, setAvailableDates] = useState([]);
+  const [selectedDate, setSelectedDate] = useState('');
 
   useEffect(() => {
     axios.get('/api/dentists').then(res => setDentists(res.data));
@@ -18,6 +20,20 @@ export const BookingPage = () => {
         .then(res => setAvailableDates(res.data));
     }
   }, [selectedDentist]);
+
+  const handleDateChange = (e) => {
+    const date = e.target.value;
+    const availableOnly = availableDates
+      .filter(event => event.title === 'Available')
+      .map(event => event.date);
+  
+    if (availableOnly.includes(date)) {
+      setSelectedDate(date);
+    } else {
+      Swal.fire('Error', 'Selected date is not available.', 'error');
+      setSelectedDate('');
+    }
+  };
 
   return (
     <section className="flex flex-col md:flex-row h-screen items-center">
@@ -51,8 +67,24 @@ export const BookingPage = () => {
               </select>
           </div>
 
-          <button type="submit" className="w-full block bg-blue-500 hover:bg-blue-400 focus:bg-blue-400 text-white font-semibold rounded
-            px-4 py-3 mt-4">Book Appointment</button>  
+          <div className="mt-4">
+            <label className="block text-gray-700">Select Date.</label>
+            <input
+                type="date"
+                value={selectedDate}
+                onChange={handleDateChange}
+                className="w-full px-4 py-3 rounded bg-gray-200 mt-1 border focus:border-blue-500 focus:bg-white focus:outline-none"
+              />
+          </div>
+
+        
+             {localStorage.getItem('token') ? (   
+                <button type="submit" className="w-full block bg-blue-500 hover:bg-blue-400 focus:bg-blue-400 text-white font-semibold rounded
+                px-4 py-3 mt-4">Book Appointment</button>  
+              ) : ( 
+                <a href="/Login" className="text-center w-full block bg-blue-500 hover:bg-blue-400 focus:bg-blue-400 text-white font-semibold rounded
+                px-4 py-3 mt-4">Login</a>  
+             )}
         </form>
       </div>
     </div>

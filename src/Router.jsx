@@ -35,9 +35,7 @@ export const RoutesComponent = () => {
         <Route
           path="/Book"
           element={
-            <GuestRoute>
               <BookingPage />
-            </GuestRoute>
           }
         />
         <Route
