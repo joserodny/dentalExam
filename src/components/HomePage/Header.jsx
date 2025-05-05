@@ -1,4 +1,3 @@
-// Header.js
 export const Header = () => (
     <header className="absolute top-0 left-0 w-full z-50 px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64">
         <div className="hidden md:flex justify-between items-center py-2 border-b text-sm ">
@@ -29,12 +28,34 @@ export const Header = () => (
             Bright Smiles Dental Care
             </a>
         </div>
-        <label for="menu-toggle" className="pointer-cursor md:hidden block">
-            <svg className="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-            <title>menu</title>
-            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
-            </svg>
-        </label>
+
+        <div className="w-full md:w-auto" id="menu">
+            <nav>
+                <ul className="md:flex items-center">
+                {localStorage.getItem('token') ? (
+                    <li className="ml-4">
+                        <a className="py-2 inline-block text-white px-2 font-semibold" href="/Dashboard">
+                        Home
+                        </a>
+                    </li>
+                    ) : (
+                    <>
+                        <li className="ml-4 lg:block">
+                        <a className="py-2 inline-block text-white px-2 font-semibold" href="/Login">
+                            Login
+                        </a>
+                        </li>
+                        <li className="ml-4">
+                        <a className="py-2 inline-block text-white px-2 font-semibold" href="/Register">
+                            Register
+                        </a>
+                        </li>
+                    </>
+                    )}
+                </ul>
+            </nav>
+        </div>
+
         </div>
     </header>
 );
