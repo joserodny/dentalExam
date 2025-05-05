@@ -5,7 +5,7 @@ import cors from 'cors';
 
 
 import { registerPatients, loginPatients, logout } from './controllers/auth.controller.js'
-import { updatePatient } from './controllers/patient.controller.js';
+import { updatePatient, dentists, getAvailableAppointments } from './controllers/patient.controller.js';
 
 dotenv.config();
 
@@ -41,6 +41,8 @@ app.post('/api/login', loginPatients);
 app.post('/api/logout', logout);
 
 // Patient routes
+app.get('/api/dentists', dentists);
+app.get('/api/appointments/available/:dentistId', getAvailableAppointments);
 app.put('/api/patients/:id', updatePatient);
 
 

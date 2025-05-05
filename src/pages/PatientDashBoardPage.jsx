@@ -122,9 +122,9 @@ export const PatientDashBoardPage = () => {
       <div className="w-full md:w-1/2 h-screen bg-gray-50 p-6 overflow-auto">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold text-gray-800">Appointments</h2>
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+          <a href='/Book' className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
             Book Appointment
-          </button>
+          </a>
         </div>
 
         <table className="w-full border-collapse table-auto text-left">

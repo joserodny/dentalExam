@@ -9,7 +9,7 @@ export const HeroSection = () => (
                 <div>
                     <h1 className="text-white text-4xl md:text-5xl xl:text-6xl font-bold leading-tight">Where Every Smile Shines Brighter</h1>
                     <p className="text-blue-100 text-xl md:text-2xl leading-snug mt-4">Your journey to a brighter, healthier smile starts here — with care you can count on.</p>
-                    <a href="#" className="px-8 py-4 bg-teal-500 text-white rounded inline-block mt-8 font-semibold">Book Appointment</a>
+                    <a href="/Book" className="px-8 py-4 bg-teal-500 text-white rounded inline-block mt-8 font-semibold">Book Appointment</a>
                     <div className="mt-8 text-white text-lg">
                     <p>(03) 9589 1400</p>
                     <p>473 Balcombe Rd, Melbourne, Victoria 3193, Australia</p>
