@@ -2,11 +2,11 @@ import express from 'express';
 import dotenv from 'dotenv';
 import mysql from 'mysql2/promise';
 import cors from 'cors';
-
+import jwt from 'jsonwebtoken';
 
 import { registerPatients, loginPatients, logout } from './controllers/auth.controller.js'
-import { updatePatient, dentists, getAvailableAppointments, createAppointment } from './controllers/patient.controller.js';
-
+import { dentists, getAvailableAppointments, createAppointment } from './controllers/booking.controller.js';
+import { updatePatient, getAppointments } from './controllers/patient.controller.js';
 dotenv.config();
 
 const app = express();
@@ -21,8 +21,6 @@ const pool = mysql.createPool({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
     waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
 });
 // Test database connection
 (async() => {
@@ -35,6 +33,25 @@ const pool = mysql.createPool({
     }
 })();
 
+const authenticateToken = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+
+    console.log('Authorization Header:', authHeader); // Log the entire header
+    console.log('Token:', token); // Log the extracted token
+
+    if (token == null) return res.sendStatus(401);
+
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+        console.log('JWT Verification Error:', err); // Log any verification errors
+        console.log('Decoded User:', user); // Log the decoded user object
+
+        if (err) return res.sendStatus(403);
+        req.user = user;
+        next();
+    });
+};
+
 //api routes
 app.post('/api/register', registerPatients);
 app.post('/api/login', loginPatients);
@@ -43,9 +60,10 @@ app.post('/api/logout', logout);
 // book appointment routes
 app.get('/api/dentists', dentists);
 app.get('/api/appointments/available/:dentistId', getAvailableAppointments);
-app.post('/api/appointments', createAppointment);
+app.post('/api/appointments', authenticateToken, createAppointment);
 // user/patient routes
-app.put('/api/patients/:id', updatePatient);
+app.put('/api/patients/:id', authenticateToken, updatePatient);
+app.get('/api/my-appointments', authenticateToken, getAppointments);
 
 
 app.listen(PORT, () => {

@@ -4,9 +4,10 @@ import Swal from 'sweetalert2';
 import { LogoutComponent } from '../components/logout'; 
 import axios from 'axios';
 
-
 export const PatientDashBoardPage = () => {
   const [user, setUser] = useState(null);
+  const [appointments, setAppointments] = useState([]);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   // Fetch user data from localStorage or backend on component mount
@@ -20,11 +21,33 @@ export const PatientDashBoardPage = () => {
       try {
         setUser(JSON.parse(storedUser));
       } catch (e) {
-        console.error('Failed to parse user from localStorage', e);
         navigate('/login');
       }
     }
   }, [navigate]);
+
+  useEffect(() => {
+    // Fetch appointments for the current authenticated user
+    const token = localStorage.getItem('token'); // Adjust based on your auth setup
+    if (!token) {
+      setError('No authentication token found');
+      return;
+    }
+
+    axios
+      .get('/api/my-appointments', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      .then((response) => {
+        setAppointments(response.data);
+      })
+      .catch((error) => {
+        setError('Failed to load appointments');
+      });
+  }, []);
+
 
   //user edit function sweet alert
   const handleEditUser = async () => {
@@ -129,22 +152,35 @@ export const PatientDashBoardPage = () => {
 
         <table className="w-full border-collapse table-auto text-left">
           <thead>
-            <tr className="bg-gray-200 bg-gray-700 text-gray-800 text-white">
+            <tr className="bg-gray-700  text-white">
               <th className="p-3">Date</th>
-              <th className="p-3">Time</th>
               <th className="p-3">Doctor</th>
               <th className="p-3">Status</th>
             </tr>
           </thead>
-          <tbody>
-            {/* Replace this row with dynamic appointment data */}
-            <tr className="border-b  hover:bg-gray-100">
-              <td className="p-3">2025-05-06</td>
-              <td className="p-3">10:30 AM</td>
-              <td className="p-3">Dr. Smith</td>
-              <td className="p-3 text-green-600 font-semibold">Confirmed</td>
+        <tbody>
+          {error ? (
+            <tr>
+              <td colSpan="3" style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'center' }}>
+                {error}
+              </td>
             </tr>
-          </tbody>
+          ) : appointments.length > 0 ? (
+            appointments.map((appointment) => (
+              <tr key={appointment.id}>
+                <td style={{ border: '1px solid #ddd', padding: '8px' }}>{appointment.date}</td>
+                <td style={{ border: '1px solid #ddd', padding: '8px' }}>{appointment.dentistName || 'N/A'}</td>
+                <td style={{ border: '1px solid #ddd', padding: '8px' }}>{appointment.status}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="3" style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'center' }}>
+                No appointments found.
+              </td>
+            </tr>
+          )}
+        </tbody>
         </table>
       </div>
     </section>
