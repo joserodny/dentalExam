@@ -20,6 +20,7 @@ export const RegisterPage = () => {
                 email,
                 password,
             });
+
     
             // Save JWT token and user info to localStorage
             localStorage.setItem('token', response.data.token);

@@ -37,15 +37,9 @@ const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 
-    console.log('Authorization Header:', authHeader); // Log the entire header
-    console.log('Token:', token); // Log the extracted token
-
     if (token == null) return res.sendStatus(401);
 
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-        console.log('JWT Verification Error:', err); // Log any verification errors
-        console.log('Decoded User:', user); // Log the decoded user object
-
         if (err) return res.sendStatus(403);
         req.user = user;
         next();

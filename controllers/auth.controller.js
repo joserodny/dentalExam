@@ -20,7 +20,11 @@ export const registerPatients = async (req, res) => {
             VALUES (?, ?, ?, NOW(), NOW())`, [name, email, hashedPassword]
         );
 
-        const patientId = result.insertId; // Get the inserted patient's ID
+        const patientId = result[0].insertId; // Ensure this is valid
+
+        if (!patientId) {
+            return res.status(500).send('Failed to retrieve patient ID.');
+        }
 
         // Create JWT token with patient data
         const token = jwt.sign(
