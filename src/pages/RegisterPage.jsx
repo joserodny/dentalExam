@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 export const RegisterPage = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const [message, setMessage] = useState('');
 
     const navigate = useNavigate(); // for navigation after successful login
 
-    const handleSubmit = async (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault();  // Prevent default form submission behavior
-        setError('');
-        setMessage('');
-
+    
         try {
             // Send registration request to the backend
             const response = await axios.post('/api/register', {
@@ -23,28 +20,44 @@ export const RegisterPage = () => {
                 email,
                 password,
             });
-
+    
             // Save JWT token and user info to localStorage
-            localStorage.setItem('token', response.data.token);  // Save the token for future requests
-            localStorage.setItem('user', JSON.stringify(response.data.user));  // Save the user info
-
-            navigate('/dashboard');  // Redirect user to the dashboard
-
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('user', JSON.stringify(response.data.patient));
+            // SweetAlert success message
+            Swal.fire({
+                icon: 'success',
+                title: 'Registration Successful!',
+                text: 'You will be redirected to the dashboard.',
+                timer: 2000,
+                showConfirmButton: false
+            });
+    
+            // Redirect after a short delay
+            setTimeout(() => {
+                navigate('/dashboard');
+            }, 2000);
+    
             // Reset the form
             setName('');
             setEmail('');
             setPassword('');
         } catch (err) {
-            // Handle errors and display error message
-            setError(err.response?.data || 'Something went wrong');
+            // SweetAlert error message
+            Swal.fire({
+                icon: 'error',
+                title: 'Registration Failed',
+                text: err.response?.data || 'Something went wrong',
+            });
         }
     };
+    
 
     return (
         <div className="min-h-screen bg-gray-100 flex flex-col justify-center sm:py-12">
             <div className="p-10 xs:p-0 mx-auto md:w-full md:max-w-md">
                 <div className="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
-                <form onSubmit={handleSubmit} className="px-5 py-7">
+                <form onSubmit={handleRegister} className="px-5 py-7">
                     <label className="font-semibold text-sm text-gray-600 pb-1 block">Full Name</label>
                     <input
                     type="text"
@@ -68,10 +81,6 @@ export const RegisterPage = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     />
-
-                    {error && <div className="text-red-500 text-sm mb-2">{error}</div>}
-                    {message && <div className="text-green-600 text-sm mb-2">{message}</div>}
-
                     <button
                     type="submit"
                     className="bg-blue-500 hover:bg-blue-600 text-white w-full py-2.5 rounded-lg text-sm font-semibold"

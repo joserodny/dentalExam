@@ -29,13 +29,12 @@ export const Header = () => (
             </a>
         </div>
 
-        <div className="hidden md:block w-full md:w-auto" id="menu">
-            <nav
-                className="w-full bg-white md:bg-transparent rounded shadow-lg px-6 py-4 mt-4 text-center md:p-0 md:mt-0 md:shadow-none">
+        <div className="w-full md:w-auto" id="menu">
+            <nav>
                 <ul className="md:flex items-center">
-                <li className="md:ml-4 md:hidden lg:block"><a className="py-2 inline-block md:text-white md:px-2 font-semibold"
+                <li className="ml-4 lg:block"><a className="py-2 inline-block text-white px-2 font-semibold"
                     href="/Login">Login</a></li>
-                <li className="md:ml-4"><a className="py-2 inline-block md:text-white md:px-2 font-semibold" href="#">Register</a></li>
+                <li className="ml-4"><a className="py-2 inline-block text-white px-2 font-semibold" href="/Register">Register</a></li>
                 </ul>
             </nav>
         </div>

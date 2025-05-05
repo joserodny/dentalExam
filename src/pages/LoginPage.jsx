@@ -77,6 +77,14 @@ export const LoginPage = () => {
                             Login
                         </button>
                     </div>
+
+                    <div className="py-5">
+                        <div className="grid grid-cols-2 gap-1">
+                            <div className="pl-5 text-center sm:text-left whitespace-nowrap">
+                                <a href="/Register" className="font-semibold text-sm text-gray-600 hover:text-blue-500 focus:text-blue-700">Create an account</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
