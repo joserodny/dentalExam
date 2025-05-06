@@ -1,12 +1,75 @@
-# React + Vite
+# Project Name
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Setup Instructions
 
-Currently, two official plugins are available:
+Follow the steps below to get the project up and running on your local machine.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+### 1. Install Dependencies
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Install all necessary packages:
+
+```bash
+npm install
+```
+
+---
+
+### 2. Setup Environment Variables
+
+Copy the example environment file:
+
+```bash
+cp .env.example .env
+```
+
+Open the newly created `.env` file and fill in the required values:
+
+```env
+DB_USERNAME=your_db_username
+DB_PASSWORD=your_db_password
+DB_DATABASE=your_database_name
+DB_HOST=localhost
+DB_DIALECT=mysql # or postgres, sqlite, etc.
+PORT=5000
+JWT_SECRET=your_generated_jwt_secret
+```
+
+⚠️ Ensure the database defined in `DB_DATABASE` exists before running migrations.
+
+---
+
+### 3. Run Database Migrations
+
+Apply Sequelize migrations to create the database schema:
+
+```bash
+npx sequelize-cli db:migrate
+```
+
+---
+
+### 4. Seed the Database
+
+Populate the database with initial data:
+
+```bash
+npx sequelize-cli db:seed:all
+```
+
+---
+
+### 5. Run the Application
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+Start the Express server:
+
+```bash
+npm run express
+```
