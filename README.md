@@ -59,6 +59,8 @@ This application provides a platform for patients to register, log in, view thei
 * **`PatientDashBoardPage`:** This page serves as the central hub for logged-in patients. It displays the user's profile information, provides a history of their booked appointments, and offers an option to edit their profile details, likely through interaction with the `updatePatient` backend function.
 * **`BookingPage`:** This component features an interactive calendar interface (powered by FullCalendar) that enables patients to book appointments with dentists. It likely interacts with the `dentists`, `getAvailableAppointments`, and `createAppointment` backend endpoints to display available slots and finalize bookings.
 
+## Database Design
+![image](https://github.com/user-attachments/assets/55d64437-3a91-4040-8ddf-074d8f9e7f1b)
 
 
 
