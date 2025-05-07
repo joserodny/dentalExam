@@ -63,6 +63,41 @@ This application provides a platform for patients to register, log in, view thei
 ![image](https://github.com/user-attachments/assets/55d64437-3a91-4040-8ddf-074d8f9e7f1b)
 
 
+## Database Schema
+CREATE DATABASE dental;
+USE dental;
+
+-- Dentists table
+CREATE TABLE dentists (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    createdAt DATETIME,
+    updatedAt DATETIME
+);
+
+-- Patients table
+CREATE TABLE patients (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    email VARCHAR(255),
+    password VARCHAR(255),
+    createdAt DATETIME,
+    updatedAt DATETIME
+);
+
+-- Appointments table
+CREATE TABLE appointments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    patientId INT,
+    dentistId INT,
+    date DATETIME,
+    status VARCHAR(255),
+    createdAt DATETIME,
+    updatedAt DATETIME,
+    FOREIGN KEY (patientId) REFERENCES patients(id),
+    FOREIGN KEY (dentistId) REFERENCES dentists(id)
+);
+
 
 ## Setup Instructions
 
